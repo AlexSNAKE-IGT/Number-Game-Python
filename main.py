@@ -28,44 +28,55 @@ def second(hp, min_lim, max_lim, auto_game):
     if int(auto_game) == 0:
         print("И так. Загадайте число и нажмите \"Enter\" чтобы начать.")
         input("Если больше введите \">\", меньше \"<\", а если угадано \"=\"")
+        check_repeat = []
         while hp != 0:
+            hp = int(hp) - 1
             number = random.randint(int(min_lim), int(max_lim))
+            while number in check_repeat:
+                number = random.randint(int(min_lim), int(max_lim))
+                break
             print("Компъютер предполагает что это число " + str(number) + ".")
             sign = input()
             if sign == "=":
                 print("КОМПЪЮТЕР:У ВАС НЕ БЫЛО ШАНСОВ МЕНЯ ПОБЕДИТЬ!!! 101001010010101010\n\n\n\n\n")
                 break
-            elif hp == 0:
+            elif int(hp) == 0:
                 print("КОМПЪЮТЕР:Глупый человек создал меня не совершенным, но я ещё вернусь!\n\n\n\n\n")
                 break
             elif sign == ">":
                 min_lim = number
-                hp = int(hp) - 1
+                check_repeat.append(number)
                 print("КОМПЪЮТЕР:У меня ещё " + str(hp) + " попыток! Я отгадаю число!")
                 pass
             elif sign == "<":
                 max_lim = number
-                hp = int(hp) - 1
+                check_repeat.append(number)
                 print("КОМПЪЮТЕР:У меня ещё " + str(hp) + " попыток! Я отгадаю число!")
                 pass
     else:
         print("И так. Введите загаданное число и нажмите \"Enter\" чтобы начать.")
         guessed_num = input()
+        check_repeat = []
         while hp != 0:
-            a = ''
+            answer = ''
             hp = int(hp) - 1
             number = random.randint(int(min_lim), int(max_lim))
+            while number in check_repeat:
+                number = random.randint(int(min_lim), int(max_lim))
+                break
             print("Компъютер предполагает что это число " + str(number) + ".")
             if str(guessed_num) == str(number):
-                a = '='
-                print(a)
+                answer = '='
+                print(answer)
             elif str(guessed_num) > str(number):
-                a = '>'
-                print(a)
+                answer = '>'
+                check_repeat.append(number)
+                print(answer)
             elif str(guessed_num) < str(number):
-                a = '<'
-                print(a)
-            sign = a
+                answer = '<'
+                check_repeat.append(number)
+                print(answer)
+            sign = answer
             if sign == "=":
                 print("КОМПЪЮТЕР:У ВАС НЕ БЫЛО ШАНСОВ МЕНЯ ПОБЕДИТЬ!!! 101001010010101010\n\n\n\n\n")
                 break
@@ -97,10 +108,10 @@ while UserChose != 4:
                       "4) Выход.\n")
     UserChose = int(UserChose)
     if UserChose == 1:
-        first(Hp, Min_Lim, Max_Lim)
+        first(int(Hp), int(Min_Lim), int(Max_Lim))
         pass
     if UserChose == 2:
-        second(Hp, Min_Lim, Max_Lim, Auto_Game)
+        second(int(Hp), int(Min_Lim), int(Max_Lim), int(Auto_Game))
         pass
     if UserChose == 3:
         Hp = input("Введите количество Hp (Попыток):")
